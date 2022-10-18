@@ -1,13 +1,7 @@
 package org.rossonet.keycloak.spi;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -24,23 +18,9 @@ import org.rossonet.keycloak.spi.dictionary.DictionaryCheck;
 
 public class DictionaryPasswordPolicyProvider implements PasswordPolicyProvider {
 
-	public static final String DEFAULT_BLACKLIST_FILE = "parole_italiane.txt";
-
 	public static final String ERROR_MESSAGE = "invalidPasswordDictionaryMessage";
 
 	private static final Logger LOG = Logger.getLogger(DictionaryPasswordPolicyProvider.class);
-
-	static Set<String> loadDictionary(final String dictionaryUrl) throws IOException, MalformedURLException {
-		final Set<String> vocabolary = new HashSet<>();
-		final InputStream is = (dictionaryUrl == null || dictionaryUrl.isEmpty())
-				? DictionaryPasswordPolicyProvider.class.getClassLoader().getResourceAsStream(DEFAULT_BLACKLIST_FILE)
-				: new URL(dictionaryUrl).openStream();
-		final BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-		while (reader.ready()) {
-			vocabolary.add(reader.readLine());
-		}
-		return vocabolary;
-	}
 
 	private final KeycloakContext context;
 
@@ -67,8 +47,7 @@ public class DictionaryPasswordPolicyProvider implements PasswordPolicyProvider 
 	public Object parseConfig(final String dictionaryUrl) {
 		try {
 			LOG.info("parse diction config from url: " + dictionaryUrl);
-			final Set<String> vocabolary = loadDictionary(dictionaryUrl);
-			LOG.info("found " + vocabolary.size() + " words in " + dictionaryUrl);
+			final Set<String> vocabolary = DictionaryCheck.loadDictionary(dictionaryUrl);
 			return vocabolary;
 		} catch (final IOException e) {
 			LOG.error("parsing dictionary", e);

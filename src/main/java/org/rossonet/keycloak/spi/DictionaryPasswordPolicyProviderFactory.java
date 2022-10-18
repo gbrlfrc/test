@@ -35,7 +35,7 @@ public class DictionaryPasswordPolicyProviderFactory implements PasswordPolicyPr
 
 	@Override
 	public String getDefaultConfigValue() {
-		return "";
+		return "https://github.com/rossonet/keycloak-password-check-spi/raw/main/src/main/resources/parole_italiane.txt";
 	}
 
 	@Override
