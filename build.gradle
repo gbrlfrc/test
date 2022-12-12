@@ -17,6 +17,7 @@ version = rootProject.version
 ext {
 	sourceCompatibility = 1.8
 	ossrhPassword = System.getenv('OSSRH_PASSWORD')
+        keycloakVersion = "11.0.2"
 }
 
 repositories {
@@ -35,11 +36,12 @@ apply plugin: 'signing'
 apply plugin: 'maven-publish'
 
 dependencies {
-  compileOnly "org.keycloak:keycloak-core:15.0.0"
-  compileOnly "org.keycloak:keycloak-server-spi:15.0.0"
-  compileOnly "org.keycloak:keycloak-server-spi-private:15.0.0"
-  compileOnly "org.keycloak:keycloak-services:15.0.0"
-  compileOnly "org.keycloak:keycloak-saml-core-public:15.0.0"
+  compileOnly "org.keycloak:keycloak-core:${keycloakVersion}"
+  compileOnly "org.keycloak:keycloak-server-spi:${keycloakVersion}"
+  compileOnly "org.keycloak:keycloak-server-spi-private:${keycloakVersion}"
+  compileOnly "org.keycloak:keycloak-services:${keycloakVersion}"
+  compileOnly "org.keycloak:keycloak-saml-core-public:${keycloakVersion}"
+  compileOnly "org.keycloak:keycloak-model-jpa:${keycloakVersion}"
   compileOnly "org.jboss.logging:jboss-logging:3.4.2.Final"
   implementation group: 'com.google.guava', name: 'guava', version: '31.1-jre'
   
@@ -63,8 +65,15 @@ eclipse {
 
 task view { doLast { println "Working on project ${project.name} [ ${project.description} ]" } }
 
-jar.doLast { task ->
-	ant.checksum file: task.archivePath
+jar {
+    doLast { task ->
+	  ant.checksum file: task.archivePath
+    }
+    manifest {
+      attributes(
+         'Dependencies'   : "org.keycloak.keycloak-services"
+      )
+    }
 }
 
 java {

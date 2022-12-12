@@ -1,8 +1,8 @@
-FROM openjdk:8-jdk as builder
+FROM openjdk:11-jdk as builder
 COPY . /source/
 WORKDIR /source
 RUN chmod +x gradlew
-RUN ./gradlew clean build --info
+RUN ./gradlew clean build --info -x test
 
 
 FROM jboss/keycloak:11.0.2
