@@ -89,8 +89,10 @@ public class ReminderTimerTask {
 		LOG.info("send mail to user " + user.getUsername() + " at email " + user.getEmail()
 				+ " because the password expires in " + passwordValidForDays + " days");
 		final DefaultEmailSenderProvider senderProvider = new DefaultEmailSenderProvider(session);
-		senderProvider.send(realm.getSmtpConfig(), user, "your password expire in " + passwordValidForDays + " days",
-				"Your password will expire in " + passwordValidForDays + " days\n\nthanks", null);
+		senderProvider.send(realm.getSmtpConfig(), user,
+				"your password will expire in " + passwordValidForDays + " days", "Your password for user "
+						+ user.getUsername() + " will expire in " + passwordValidForDays + " days\n\nthanks",
+				null);
 		LOG.info("sent mail to user " + user.getUsername() + " at email " + user.getEmail()
 				+ " because the password expires in " + passwordValidForDays + " days");
 	}
