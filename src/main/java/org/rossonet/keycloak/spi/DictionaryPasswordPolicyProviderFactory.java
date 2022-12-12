@@ -21,6 +21,7 @@ public class DictionaryPasswordPolicyProviderFactory implements PasswordPolicyPr
 
 	@Override
 	public PasswordPolicyProvider create(final KeycloakSession session) {
+		LOG.info("PasswordPolicyProvider created");
 		return new DictionaryPasswordPolicyProvider(session.getContext(), this);
 	}
 
