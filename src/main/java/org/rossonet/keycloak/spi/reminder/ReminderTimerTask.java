@@ -50,6 +50,7 @@ public class ReminderTimerTask {
 
 	public ReminderTimerTask() {
 		timer.schedule(task, CHECK_FIRST_INTERVAL, MS_IN_DAY);
+//		timer.schedule(task, CHECK_FIRST_INTERVAL, 60000);
 		LOG.info("ReminderTimerTask started");
 	}
 
