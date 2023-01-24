@@ -16,6 +16,7 @@ public class DictionaryCheckTest {
 	public void checkComplexRules() throws MalformedURLException, IOException {
 		final Set<String> dictionary = DictionaryCheck.loadDictionary(null);
 		System.out.println("found " + dictionary.size() + " words in null");
+		DictionaryCheck.debug = true;
 		boolean foundInDictionary = DictionaryCheck.check(dictionary, "parola");
 		assertTrue(foundInDictionary);
 		foundInDictionary = DictionaryCheck.check(dictionary, "!Lparola.2A");
@@ -33,9 +34,27 @@ public class DictionaryCheckTest {
 	}
 
 	@Test
+	public void checkDiciottoGennaioDuemilaEVentiTreWithUrl() throws MalformedURLException, IOException {
+		final Set<String> dictionary = DictionaryCheck.loadDictionary(
+				"https://github.com/rossonet/keycloak-password-check-spi/raw/main/src/main/resources/parole_italiane.txt");
+		System.out.println("found " + dictionary.size()
+				+ " words in https://github.com/rossonet/keycloak-password-check-spi/raw/main/src/main/resources/parole_italiane.txt");
+		DictionaryCheck.debug = true;
+		boolean foundInDictionary = DictionaryCheck.check(dictionary, "Apaolo\"7b%");
+		assertFalse(foundInDictionary);
+		foundInDictionary = DictionaryCheck.check(dictionary, "Agatto\"7b%");
+		assertFalse(foundInDictionary);
+		foundInDictionary = DictionaryCheck.check(dictionary, "Atorino\"7b%");
+		assertTrue(foundInDictionary);
+		foundInDictionary = DictionaryCheck.check(dictionary, "Aivrea\"7b%");
+		assertFalse(foundInDictionary);
+	}
+
+	@Test
 	public void checkWordInDictionary() throws MalformedURLException, IOException {
 		final Set<String> dictionary = DictionaryCheck.loadDictionary(null);
 		System.out.println("found " + dictionary.size() + " words in null");
+		DictionaryCheck.debug = true;
 		boolean foundInDictionary = DictionaryCheck.check(dictionary, "sg1erro");
 		assertFalse(foundInDictionary);
 		foundInDictionary = DictionaryCheck.check(dictionary, "cazzata");
@@ -52,6 +71,7 @@ public class DictionaryCheckTest {
 				"https://github.com/rossonet/keycloak-password-check-spi/raw/main/src/main/resources/parole_italiane.txt");
 		System.out.println("found " + dictionary.size()
 				+ " words in https://github.com/rossonet/keycloak-password-check-spi/raw/main/src/main/resources/parole_italiane.txt");
+		DictionaryCheck.debug = true;
 		boolean foundInDictionary = DictionaryCheck.check(dictionary, "sge5rro");
 		assertFalse(foundInDictionary);
 		foundInDictionary = DictionaryCheck.check(dictionary, "cazzata");
