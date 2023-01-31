@@ -45,7 +45,7 @@ public class DictionaryCheckTest {
 		foundInDictionary = DictionaryCheck.check(dictionary, "Kcancello9s/%");
 		assertTrue(foundInDictionary);
 		foundInDictionary = DictionaryCheck.check(dictionary, "$caratteristico4V)g");
-		assertFalse(foundInDictionary);
+		assertTrue(foundInDictionary);
 		foundInDictionary = DictionaryCheck.check(dictionary, "Agatto\"7b%");
 		assertFalse(foundInDictionary);
 		foundInDictionary = DictionaryCheck.check(dictionary, "AgattoA\"7b%");

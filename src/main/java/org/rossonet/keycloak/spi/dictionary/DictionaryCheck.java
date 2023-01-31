@@ -39,14 +39,21 @@ public class DictionaryCheck {
 	 */
 	public static boolean check(final Set<String> blacklist, final String wordToCheck) {
 		boolean found = false;
+		int c = 0;
 		for (final String w : blacklist) {
+			if (debug) {
+				c++;
+			}
 			if (w.length() < 5) {
 				// non controlla il match
 			} else {
 				if (wordToCheck.toLowerCase().contains(w.toLowerCase())) {
+					if (debug) {
+						System.out.println(wordToCheck + " F: " + w + " line: " + c);
+					}
 					if (w.length() + 5 > wordToCheck.length()) {
 						if (debug) {
-							System.out.println(wordToCheck + " C1 -> " + wordToCheck + " F: " + w);
+							System.out.println(wordToCheck + " C1 -> " + wordToCheck + " F: " + w + " line: " + c);
 						}
 						found = true;
 					}
